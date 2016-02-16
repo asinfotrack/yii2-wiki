@@ -1,0 +1,36 @@
+{
+	"name": "asinfotrack/yii2-wiki",
+	"type": "yii2-extension",
+	
+	"description": "Yii2-Wiki is a flexible implementation of a wiki for Yii2",
+	"keywords": ["yii2", "wiki", "module"],
+	
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Pascal Mueller",
+			"email": "pascal.mueller@asinfotrack.ch",
+			"homepage": "http://www.asinfotrack.ch"
+		}
+	],
+	
+	"minimum-stability": "stable",
+	"support": {
+		"source": "https://github.com/asinfotrack/yii2-wiki",
+		"issues": "https://github.com/asinfotrack/yii2-wiki/issues"
+	},
+	
+	"require": {
+		"php": ">=5.4.0",
+		
+		"yiisoft/yii2": "2.0.*",
+	  	"yiisoft/yii2-bootstrap": "*",
+		"yiisoft/yii2-codeception": "~2.0.0"
+	},
+	
+	"autoload": {
+		"psr-4": {
+			"asinfotrack\\yii2\\wiki\\": ""
+		}
+	}
+}
