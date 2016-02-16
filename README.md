@@ -1,7 +1,6 @@
 # yii2-wiki
 Yii2-Wiki is a flexible implementation of a wiki for Yii2
 
-
 ## Installation
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
