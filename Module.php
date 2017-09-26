@@ -100,7 +100,7 @@ class Module extends \yii\base\Module implements \yii\base\BootstrapInterface
 	 */
 	public $addDefaultUrlRules = false;
 
-	public $layout;
+	public $layout = false;
 
 	/**
 	 * @var array optional set of default url rules which will be added to the applications

@@ -71,7 +71,9 @@ class ContentController extends Controller
 
     public function beforeAction($action)
     {
-        $this->layout = Module::getInstance()->layout;
+        if(Module::getInstance()->layout) {
+            $this->layout = Module::getInstance()->layout;
+        }
         return parent::beforeAction($action);
     }
 
