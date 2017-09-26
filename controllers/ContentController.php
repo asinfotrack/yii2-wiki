@@ -2,10 +2,12 @@
 namespace asinfotrack\yii2\wiki\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use asinfotrack\yii2\wiki\Module;
+
 
 /**
  * WikiController implements the CRUD actions for Wiki model.
@@ -22,7 +24,7 @@ class ContentController extends Controller
 	 */
 	public function behaviors()
 	{
-		return [
+		$return = [
 			'verbs'=>[
 				'class'=>VerbFilter::className(),
 				'actions'=>[
@@ -30,7 +32,48 @@ class ContentController extends Controller
 				],
 			],
 		];
+
+		$accessRules = [];
+		if($rolesCanEdit = Module::getInstance()->rolesCanEdit){
+            $accessRules[] = [
+                'allow' => true,
+                'actions' => [
+                    'delete',
+                    'admin',
+                    'create',
+                    'update',
+
+                ],
+                'roles' => $rolesCanEdit,
+            ];
+        }
+
+		if($rolesCanView = Module::getInstance()->rolesCanView){
+            $accessRules[] = [
+                'allow' => true,
+                'actions' => [
+                    'index',
+                    'view'
+                ],
+                'roles' => $rolesCanView,
+            ];
+        }
+
+        if($accessRules){
+            $return['access'] = [
+                'class' => AccessControl::className(),
+                'rules' => $accessRules,
+            ];
+        }
+
+		return $return;
 	}
+
+    public function beforeAction($action)
+    {
+        $this->layout = Module::getInstance()->layout;
+        return parent::beforeAction($action);
+    }
 
 	/**
 	 * Admin action to manage wiki pages
@@ -164,9 +207,9 @@ class ContentController extends Controller
 
 		if (($model = $modelClassName::findOne($id)) !== null) {
 			return $model;
-		} else {
-			return null;
 		}
+		return null;
+
 	}
 
 }

@@ -100,6 +100,8 @@ class Module extends \yii\base\Module implements \yii\base\BootstrapInterface
 	 */
 	public $addDefaultUrlRules = false;
 
+	public $layout;
+
 	/**
 	 * @var array optional set of default url rules which will be added to the applications
 	 * url rules. If enabled, the module name will be omitted by default. The wiki is then
@@ -110,6 +112,19 @@ class Module extends \yii\base\Module implements \yii\base\BootstrapInterface
 		'<module:(wiki)>/<action:[\w-]+>/<id:[\w\d-]+>'=>'<module>/content/<action>',
 		'<module:(wiki)>/<action:[\w-]+>'=>'<module>/content/<action>',
 	];
+
+    /**
+     * roles list, who can edit
+     * @var bool|array
+     */
+	public $rolesCanEdit = false;
+
+	/**
+     * roles list, who can view
+     *  ['?','@'] - guest and authorised users
+     * @var bool|array
+     */
+	public $rolesCanView = false;
 
 	/**
 	 * @inheritdoc
