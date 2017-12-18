@@ -1,6 +1,7 @@
 <?php
 namespace asinfotrack\yii2\wiki\controllers;
 
+use asinfotrack\yii2\wiki\models\Wiki;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -24,49 +25,45 @@ class ContentController extends Controller
 	 */
 	public function behaviors()
 	{
-		$return = [
-			'verbs'=>[
-				'class'=>VerbFilter::className(),
-				'actions'=>[
-					'delete'=>['post'],
-				],
-			],
-		];
 
-		$accessRules = [];
-		if($rolesCanEdit = Module::getInstance()->rolesCanEdit){
-            $accessRules[] = [
-                'allow' => true,
-                'actions' => [
-                    'delete',
-                    'admin',
-                    'create',
-                    'update',
-
+        if($rolesCanEdit = Module::getInstance()->rolesCanEdit){
+            return [
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'actions' => [
+                                'delete',
+                                'admin',
+                                'create',
+                                'update',
+                            ],
+                            'roles' => $rolesCanEdit,
+                        ],
+                        [
+                            'allow' => true,
+                            'actions' => [
+                                'index',
+                                'view'
+                            ],
+                            'roles' => Module::getInstance()->rolesCanView,
+                        ],
+                    ],
                 ],
-                'roles' => $rolesCanEdit,
             ];
+
         }
 
-		if($rolesCanView = Module::getInstance()->rolesCanView){
-            $accessRules[] = [
-                'allow' => true,
-                'actions' => [
-                    'index',
-                    'view'
+        return [
+            'verbs'=>[
+                'class'=>VerbFilter::className(),
+                'actions'=>[
+                    'delete'=>['post'],
                 ],
-                'roles' => $rolesCanView,
-            ];
-        }
+            ],
+        ];
 
-        if($accessRules){
-            $return['access'] = [
-                'class' => AccessControl::className(),
-                'rules' => $accessRules,
-            ];
-        }
-
-		return $return;
 	}
 
     public function beforeAction($action)
@@ -139,7 +136,8 @@ class ContentController extends Controller
 		}
 
 		//get the model class name
-		$modelClassName = Module::getInstance()->modelClass;
+		/** @var Wiki $modelClassName */
+        $modelClassName = Module::getInstance()->modelClass;
 
 		//if the id already exists, go to update action
 		$model = $modelClassName::findOne($id);
@@ -154,12 +152,13 @@ class ContentController extends Controller
 
 		if ($loaded && $model->save()) {
 			return $this->redirect(['view', 'id'=>$model->id]);
-		} else {
-			return $this->render(Module::getInstance()->viewMap['create'], [
-				'model'=>$model,
-			]);
 		}
-	}
+
+        return $this->render(Module::getInstance()->viewMap['create'], [
+            'model'=>$model,
+        ]);
+
+    }
 
 	/**
 	 * Updates an existing Wiki model. If the update is successful, the browser
@@ -175,11 +174,12 @@ class ContentController extends Controller
 
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(['view', 'id'=>$model->id]);
-		} else {
-			return $this->render(Module::getInstance()->viewMap['update'], [
-				'model'=>$model,
-			]);
 		}
+
+        return $this->render(Module::getInstance()->viewMap['update'], [
+            'model'=>$model,
+        ]);
+
 	}
 
 	/**
@@ -207,7 +207,7 @@ class ContentController extends Controller
 	{
 		$modelClassName = Module::getInstance()->modelClass;
 
-		if (($model = $modelClassName::findOne($id)) !== null) {
+		if (($model = $modelClassName::findOne(['id' => $id])) !== null) {
 			return $model;
 		}
 		return null;

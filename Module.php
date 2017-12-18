@@ -124,7 +124,7 @@ class Module extends \yii\base\Module implements \yii\base\BootstrapInterface
      *  ['?','@'] - guest and authorised users
      * @var bool|array
      */
-	public $rolesCanView = false;
+	public $rolesCanView = ['@'];
 
 	/**
 	 * @inheritdoc
