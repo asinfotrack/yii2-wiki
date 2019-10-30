@@ -1,6 +1,7 @@
 <?php
 namespace asinfotrack\yii2\wiki;
 
+use yii\base\BootstrapInterface;
 use yii\helpers\Inflector;
 
 /**
@@ -10,7 +11,7 @@ use yii\helpers\Inflector;
  * @link http://www.asinfotrack.ch
  * @license MIT
  */
-class Module extends \yii\base\Module implements \yii\base\BootstrapInterface
+class Module extends \yii\base\Module implements BootstrapInterface
 {
 
 	/**
@@ -138,26 +139,18 @@ class Module extends \yii\base\Module implements \yii\base\BootstrapInterface
 	}
 
 	/**
-	 * @inheritdoc
-	 */
-	public function init()
-	{
-		parent::init();
-	}
-
-	/**
 	 * Creates an article id from a string
 	 *
 	 * @param string $string the raw string to create an article id from
 	 * @return string the corrected string ready to use as an article id
 	 */
-	public function createArticleId($string)
-	{
+	public function createArticleId($string): string
+    {
 		if ($this->createArticleIdCallback !== null && $this->createArticleIdCallback instanceof \Closure) {
 			return call_user_func($this->createArticleIdCallback, $string);
-		} else {
-			return Inflector::slug($string);
 		}
+		return Inflector::slug($string);
+
 	}
 
 	/**
@@ -166,8 +159,8 @@ class Module extends \yii\base\Module implements \yii\base\BootstrapInterface
 	 * @param string $id the id to check
 	 * @return bool true if the id is valid
 	 */
-	public function isValidArticleId($id)
-	{
+	public function isValidArticleId($id): bool
+    {
 		return preg_match($this->articleIdRegex, $id) === 1;
 	}
 
@@ -178,13 +171,13 @@ class Module extends \yii\base\Module implements \yii\base\BootstrapInterface
 	 * @param string $content the raw content from the article as saved in the db
 	 * @return string the processed content ready for output
 	 */
-	public function processContent($content)
-	{
+	public function processContent($content): string
+    {
 		if ($this->processContentCallback !== null && $this->processContentCallback instanceof \Closure) {
 			return call_user_func($this->processContentCallback, $content);
-		} else {
-			return $content;
 		}
+		return $content;
+
 	}
 
 }
