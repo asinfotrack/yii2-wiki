@@ -1,6 +1,7 @@
 <?php
 namespace asinfotrack\yii2\wiki;
 
+use d3system\yii2\base\D3Module;
 use yii\base\BootstrapInterface;
 use yii\helpers\Inflector;
 
@@ -11,7 +12,7 @@ use yii\helpers\Inflector;
  * @link http://www.asinfotrack.ch
  * @license MIT
  */
-class Module extends \yii\base\Module implements BootstrapInterface
+class Module extends D3Module implements BootstrapInterface
 {
 
 	/**
