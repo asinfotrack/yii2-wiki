@@ -1,5 +1,7 @@
 <?php
 
+use yii\db\Migration;
+
 /**
  * Migration to create the default wiki table
  *
@@ -7,7 +9,7 @@
  * @link http://www.asinfotrack.ch
  * @license MIT
  */
-class m151121_213536_wiki extends \yii\db\Migration
+class m151121_213536_wiki extends Migration
 {
 
 	/**
@@ -19,8 +21,13 @@ class m151121_213536_wiki extends \yii\db\Migration
 			'id'=>'CHAR(255) NOT NULL',
 			'title'=>$this->string()->notNull(),
 			'content'=>$this->text(),
-			'PRIMARY KEY (id)',
 		]);
+        $this->createIndex(
+            'wiki_ind_id',
+            '{{%wiki}}',
+            'id',
+            true
+        );
 
 		return true;
 	}
