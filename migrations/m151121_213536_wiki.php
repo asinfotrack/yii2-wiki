@@ -17,18 +17,15 @@ class m151121_213536_wiki extends Migration
 	 */
 	public function up()
 	{
-		$this->createTable('{{%wiki}}', [
-			'id'=>'CHAR(255) NOT NULL',
-			'title'=>$this->string()->notNull(),
-			'content'=>$this->text(),
-		]);
-        $this->createIndex(
-            'wiki_ind_id',
-            '{{%wiki}}',
-            'id',
-            true
-        );
+        $this->execute('
+            CREATE TABLE `wiki` (
+              `id` char(255) CHARACTER SET latin1 NOT NULL,
+              `title` varchar(255) NOT NULL,
+              `content` text,
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
+        ');
 		return true;
 	}
 
