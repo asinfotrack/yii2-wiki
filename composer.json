@@ -24,7 +24,7 @@
 		"php": ">=5.4.0",
 		"yiisoft/yii2": "2.0.*",
 	  	"yiisoft/yii2-bootstrap": "*",
-		"erusev/parsedown": "1.7.4"
+		"erusev/parsedown": "1.7.*"
 	},
 	
 	"autoload": {
