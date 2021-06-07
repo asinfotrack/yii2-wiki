@@ -2,7 +2,7 @@
 namespace asinfotrack\yii2\wiki\models;
 
 use Yii;
-use app\modules\wiki\Module;
+use asinfotrack\yii2\wiki\Module;
 
 /**
  * This is the model class for table "wiki".

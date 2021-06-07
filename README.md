@@ -1,5 +1,7 @@
 # yii2-wiki
 Yii2-Wiki is a flexible implementation of a wiki for Yii2
+ - can implement own layout
+ - can use rules for access control
 
 ## Installation
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
@@ -40,7 +42,18 @@ add the following entry to the modules-part of your config-file:
 		'processContentCallback'=>function($content) {
 			//example if you want to use markdown in your wiki
 			return Parsedown::instance()->parse($content);
-		}
+		},
+		//example for implementing other layout
+        'layout' =>  '@layout',
+        'viewMap' => [
+            'admin'=>'@vendor/ea/eablankonthema/wiki_views/content/admin',
+            'view'=>'@vendor/ea/eablankonthema/wiki_views/content/view',
+            'create'=>'@vendor/ea/eablankonthema/wiki_views/content/create',
+            'update'=>'@vendor/ea/eablankonthema/wiki_views/content/update',
+        ],
+
+        'rolesCanEdit' => ['WikiEdit'],
+        'rolesCanView' => ['@']
 	],
 ],
 

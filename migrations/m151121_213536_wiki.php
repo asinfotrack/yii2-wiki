@@ -1,5 +1,7 @@
 <?php
 
+use yii\db\Migration;
+
 /**
  * Migration to create the default wiki table
  *
@@ -7,7 +9,7 @@
  * @link http://www.asinfotrack.ch
  * @license MIT
  */
-class m151121_213536_wiki extends \yii\db\Migration
+class m151121_213536_wiki extends Migration
 {
 
 	/**
@@ -15,13 +17,15 @@ class m151121_213536_wiki extends \yii\db\Migration
 	 */
 	public function up()
 	{
-		$this->createTable('{{%wiki}}', [
-			'id'=>'CHAR(255) NOT NULL',
-			'title'=>$this->string()->notNull(),
-			'content'=>$this->text(),
-			'PRIMARY KEY (id)',
-		]);
+        $this->execute('
+            CREATE TABLE `wiki` (
+              `id` char(255) CHARACTER SET latin1 NOT NULL,
+              `title` varchar(255) NOT NULL,
+              `content` text,
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
+        ');
 		return true;
 	}
 

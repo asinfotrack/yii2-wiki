@@ -1,10 +1,10 @@
 <?php
 namespace asinfotrack\yii2\wiki\models;
 
-use Yii;
+
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\wiki\Module;
+use asinfotrack\yii2\wiki\Module;
 
 /**
  * WikiSearch represents the model behind the search form about `app\models\Wiki`.
@@ -23,7 +23,7 @@ class WikiSearch extends Wiki
 	{
 		return [
 			[['id', 'title', 'content'], 'safe'],
-			[['created', 'created_by', 'updated', 'updated_by'], 'integer'],
+			//[['created', 'created_by', 'updated', 'updated_by'], 'integer'],
 		];
 	}
 
